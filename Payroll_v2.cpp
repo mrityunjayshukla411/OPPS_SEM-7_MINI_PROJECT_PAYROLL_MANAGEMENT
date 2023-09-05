@@ -7,6 +7,7 @@
 #include <time.h>
 #include <iomanip>
 #include <ctype.h>
+#include <ctime>
 #define max 50
 
 using namespace std;
@@ -35,6 +36,7 @@ void editexp(PayrollMgmt &pmgt, int);
 void editage(PayrollMgmt &pmgt, int);
 void editsalary(PayrollMgmt &pmgt, int);
 void displayRecords(PayrollMgmt &pmgt);
+void displayRecords(PayrollMgmt &pmgt, int numOfRecords);
 void deleteRecords(PayrollMgmt &pmgt);
 void search(PayrollMgmt &pmgt);
 void saveRecords(PayrollMgmt &pmgt);
@@ -70,13 +72,14 @@ class PayrollMgmt
 {
 private:
 	employee emp[max], tempemp[max];
-
+	clock_t time_req;
 public:
 	PayrollMgmt()
 	{
 		loading();
-		cout << "\n\nInstantiating Variables...\n\n"
+		cout << "\n\nInstantiating Clock...\n\n"
 			 << endl;
+		time_req = clock();
 	}
 	friend void insertRecords(PayrollMgmt &pmgt);
 	friend void editRecords(PayrollMgmt &pmgt);
@@ -88,6 +91,7 @@ public:
 	friend void editage(PayrollMgmt &pmgt, int);
 	friend void editsalary(PayrollMgmt &pmgt, int);
 	friend void displayRecords(PayrollMgmt &pmgt);
+	friend void displayRecords(PayrollMgmt &pmgt, int numOfRecords);
 	friend void deleteRecords(PayrollMgmt &pmgt);
 	friend void search(PayrollMgmt &pmgt);
 	friend void saveRecords(PayrollMgmt &pmgt);
@@ -97,7 +101,7 @@ public:
 	{
 		loading();
 		cout << "\n\n Terminating Session...\n\n"
-		<< endl;
+			 <<"Time Taken:- "<< time_req - clock() << endl;
 	}
 };
 
@@ -471,6 +475,56 @@ void displayRecords(PayrollMgmt &pmgt)
 	getch();
 }
 
+// Function Overloading
+void displayRecords(PayrollMgmt &pmgt, int numOfRecords)
+{
+	// system("cls");
+	borderNoDelay();
+	gotoXY(20, 4);
+	printf("       ******** List of the Employees ********");
+	gotoXY(6, 6);
+	cout << "Name\tCode\tDesignation\tYears(EXP)\tAge\tSalary " << endl;
+	gotoXY(6, 7);
+	cout << "------------------------------------------------------------------" << endl;
+	if (numOfRecords > num)
+	{
+		for (int i = 0, j = 8; i <= num - 1; i++, j++)
+		{
+			gotoXY(6, j);
+			cout << pmgt.emp[i].name;
+			gotoXY(19, j);
+			cout << pmgt.emp[i].code;
+			gotoXY(26, j);
+			cout << pmgt.emp[i].designation;
+			gotoXY(47, j);
+			cout << pmgt.emp[i].exp;
+			gotoXY(58, j);
+			cout << pmgt.emp[i].age;
+			gotoXY(66, j);
+			cout << pmgt.emp[i].grosspay;
+		}
+	}
+	else
+	{
+		for (int i = 0, j = 8; i <= numOfRecords - 1; i++, j++)
+		{
+			gotoXY(6, j);
+			cout << pmgt.emp[i].name;
+			gotoXY(19, j);
+			cout << pmgt.emp[i].code;
+			gotoXY(26, j);
+			cout << pmgt.emp[i].designation;
+			gotoXY(47, j);
+			cout << pmgt.emp[i].exp;
+			gotoXY(58, j);
+			cout << pmgt.emp[i].age;
+			gotoXY(66, j);
+			cout << pmgt.emp[i].grosspay;
+		}
+	}
+	getch();
+}
+
 void loading()
 {
 	system("cls");
@@ -782,7 +836,7 @@ void displayPayslip(PayrollMgmt &pmgt)
 
 int main()
 {
-	PayrollMgmt* pmgt = new PayrollMgmt();
+	PayrollMgmt *pmgt = new PayrollMgmt();
 	setWindowSize();
 	border();
 	intro();
