@@ -101,7 +101,7 @@ public:
 	{
 		loading();
 		cout << "\n\n Terminating Session...\n\n"
-			 <<"Time Taken:- "<< time_req - clock() << endl;
+			 <<"Time Taken:- "<< clock() - time_req <<" msecs"<< endl;
 	}
 };
 
