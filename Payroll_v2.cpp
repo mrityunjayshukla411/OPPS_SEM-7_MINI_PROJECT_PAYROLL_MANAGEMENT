@@ -13,12 +13,16 @@
 
 using namespace std;
 
+// Forward Functions and Classes
 class employee;
 class PayrollMgmt;
+// Glogal variable
 int num = 0;
+// Call by reference and Call by value Usage
 void insertRecords(PayrollMgmt &pmgt);
 void editRecords(PayrollMgmt &pmgt);
 void editsalary(PayrollMgmt &pmgt, int);
+// Function Overloading
 void displayRecords(PayrollMgmt &pmgt);
 void displayRecords(PayrollMgmt &pmgt, int numOfRecords);
 void deleteRecords(PayrollMgmt &pmgt);
@@ -33,7 +37,7 @@ public:
 	char name[20], designation[20], AnyLoan;
 	int code, exp, age, salary, HRA, PF, tax, MealAllowance, TransportAllowance, MedicalAllowance, LoanBalance, LoanDebit, grosspay, workingHours, DA;
 
-	// Operator Overloading
+	// Operator Overloading Usage
 	int operator%(employee const &c1)
 	{
 		return (300 * c1.workingHours);
@@ -43,17 +47,21 @@ public:
 class PayrollMgmt
 {
 private:
+	// Array of objects
 	employee emp[max], tempemp[max];
 	clock_t time_req;
 
 public:
+	// Constructor Usage
 	PayrollMgmt()
 	{
 		loading();
 		cout << "\n\nInstantiating Clock...\n\n"
 			 << endl;
-		time_req = clock();
+		// This keyword usage
+		this->time_req = clock();
 	}
+	// Friend Function Usage to access private variables of employee class
 	friend void insertRecords(PayrollMgmt &pmgt);
 	friend void editRecords(PayrollMgmt &pmgt);
 	friend void editsalary(PayrollMgmt &pmgt, int);
@@ -64,6 +72,8 @@ public:
 	friend void saveRecords(PayrollMgmt &pmgt);
 	friend void getrecords(PayrollMgmt &pmgt);
 	friend void displayPayslip(PayrollMgmt &pmgt);
+
+	// Destructor Usage
 	~PayrollMgmt()
 	{
 		loading();
@@ -445,6 +455,7 @@ void displayPayslip(PayrollMgmt &pmgt)
 
 int main()
 {
+	// New keyword and Pointer usage
 	PayrollMgmt *pmgt = new PayrollMgmt();
 	setWindowSize();
 	border();
@@ -455,8 +466,6 @@ int main()
 	menu();
 	getrecords(*pmgt);
 	char option;
-	if (isFilePresent())
-		num--;
 	while (1)
 	{
 		option = getch();
@@ -482,6 +491,7 @@ int main()
 			break;
 		case 'q':
 			saveRecords(*pmgt);
+			// Delete Keyword Usage
 			delete pmgt;
 			exit(0);
 		}
